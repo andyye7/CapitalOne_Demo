@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    // <!--
+    function getSenderBalance(){
+        if (document.getElementById("sender").value == ""){
+            document.getElementById("senderError").innerHTML = "Please input sender account id";
+        }
+        else{
+            document.getElementById("senderError").innerHTML = "";
+            $.ajax({
+                    url: "https://psu-capitalone-api.herokuapp.com/api/accounts/" + document.getElementById("sender").value,
+                    dataType: "json",
+                    error: function() {
+                         document.getElementById("senderError").innerHTML = "Error on getting account balance";
+                      },                
+                    success: function(data){
+                        if (!("error" in data)){
+                            var balanceStream = data.nickname + ": $" + data.balance.toFixed(2); 
+                            $("#senderBalance").html(balanceStream);
+                        }
+                    },
+                    type: "GET"
+            }); 
+        }
+    }
+    function getReceiverBalance(){
+        if (document.getElementById("receiver1").value == ""){
+            document.getElementById("receiverError").innerHTML = "Please input receiver account id";
+        }
+        else{
+            document.getElementById("receiverError").innerHTML = "";
+            $.ajax({
+                    url: "https://psu-capitalone-api.herokuapp.com/api/accounts/" + document.getElementById("receiver1").value,
+                    dataType: "json",
+                    error: function() {
+                         document.getElementById("receiverError").innerHTML = "Error on getting account balance for receiver 1";
+                      },                
+                    success: function(data){
+                        if (!("error" in data)){
+                            var balanceStream = data.nickname + ": $" + data.balance.toFixed(2); 
+                            $("#receiverBalance1").html(balanceStream);
+                        }
+                    },
+                    type: "GET"
+            });
+
+            if(document.getElementById("receiver2").value != ""){
+                document.getElementById("receiverError").innerHTML = "";
+                $.ajax({
+                        url: "https://psu-capitalone-api.herokuapp.com/api/accounts/" + document.getElementById("receiver2").value,
+                        dataType: "json",
+                        error: function() {
+                        document.getElementById("receiverError").innerHTML = "Error on getting account balance for receiver 2";
+                        },                
+                        success: function(data){
+                        if (!("error" in data)){
+                            var balanceStream = data.nickname + ": $" + data.balance.toFixed(2); 
+                            $("#receiverBalance2").html(balanceStream);
+                        }
+                        },
+                        type: "GET"
+                });
+            }
+
+            if(document.getElementById("receiver3").value != ""){
+                document.getElementById("receiverError").innerHTML = "";
+                $.ajax({
+                        url: "https://psu-capitalone-api.herokuapp.com/api/accounts/" + document.getElementById("receiver3").value,
+                        dataType: "json",
+                        error: function() {
+                        document.getElementById("receiverError").innerHTML = "Error on getting account balance for receiver 3";
+                        },                
+                        success: function(data){
+                        if (!("error" in data)){
+                            var balanceStream = data.nickname + ": $" + data.balance.toFixed(2); 
+                            $("#receiverBalance3").html(balanceStream);
+                        }
+                        },
+                        type: "GET"
+                });
+            }
+        }
+    }    
+    // -->
+</script>
+</head>
+<body>
+<!--
+    <div class="well">
+        <div class="form-group">
+          <label for="senderAccountID">Account ID of Sender: </label>
+          <input type="text" class="form-control" id="sender" value="">
+        </div>
+        <div class="form-group">
+          <label for="receiverAccountID">Account ID of Receiver: </label>
+          <input type="text" class="form-control" id="receiver" value="">
+        </div>    
+        <button onclick="getSenderBalance()" class="btn btn-primary">Get Sender Account Balance</button>
+        <button onclick="getReceiverBalance()" class="btn btn-success">Get Receiver Account Balance</button>
+        <p id="senderError"></p>
+        <p id="receiverError"></p>
+    </div>    
+    <div class="well">
+        <p id="senderBalance"></p>
+        <p id="receiverBalance"></p>
+    </div>
+-->
+<div class="container">
+  <h1>Demo</h1>
+    <div class="well">
+        <div class="form-group">
+          <label for="senderAccountID">Account ID of Sender: </label>
+          <input type="text" class="form-control" id="sender" value="">
+        </div>
+        <div class="form-group">
+          <label for="receiverAccountID">Account ID of Receiver #1: </label>
+          <input type="text" class="form-control" id="receiver1" value="">
+        </div>
+        <div class="form-group">
+          <label for="receiverAccountID">Account ID of Receiver #2: </label>
+          <input type="text" class="form-control" id="receiver2" value="">
+        </div>  
+        <div class="form-group">
+          <label for="receiverAccountID">Account ID of Receiver #3: </label>
+          <input type="text" class="form-control" id="receiver3" value="">
+        </div>  
+        <button onclick="getSenderBalance()" class="btn btn-primary">Get Sender Account Balance</button>
+        <button onclick="getReceiverBalance()" class="btn btn-success">Get Receiver Account Balance</button>
+        <p id="senderError"></p>
+        <p id="receiverError"></p>
+    </div>     
+  <div class="row">
+    <div class="col-sm-6">
+        <h1><dt>Sender Account Balance</dt></h1>
+        <h2 id="senderBalance" class="text-danger" value=""></h2>
+    </div>
+    <div class="col-sm-6">
+        <h1><dt>Receiver Account Balance</dt></h1>
+        <h2 id="receiverBalance1" class="text-danger" value=""></h2>
+        <h2 id="receiverBalance2" class="text-danger" value=""></h2>
+        <h2 id="receiverBalance3" class="text-danger" value=""></h2>
+    </div>
+  </div>
+</div>    
+    
+    
+</body>
+</html>
